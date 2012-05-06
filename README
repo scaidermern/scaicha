@@ -4,7 +4,7 @@ Overview
 scaicha is a python script for pie chart generation. It generates a music
 tag chart based on the top artists of an arbitrary last.fm user.
 
-The Data is gathered with the help of the last.fm API and charts are drawn
+The data is gathered with the help of the last.fm API and charts are drawn
 using the python module pycha.
 
 
@@ -75,3 +75,8 @@ CGI mode
 - open cgi.html in your browser
 
 note: the CGI mode lacks proper testing, use at your own risk
+
+
+## License
+GPL v3 (http://www.gnu.org/licenses/gpl.html)
+(c) Alexander Heinlein (http://choerbaert.org), Deamon Hell (http://www.last.fm/user/Daemon_Hell)
