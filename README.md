@@ -1,10 +1,10 @@
 # Overview
 
 scaicha is a python script for pie chart generation. It generates a music
-tag chart based on the top artists of an arbitrary last.fm user.
+tag chart based on the top artists of an arbitrary [last.fm](http://last.fm) user.
 
-The Data is gathered with the help of the last.fm API and charts are drawn
-using the python module pycha.
+The data is gathered with the help of the last.fm API and charts are drawn
+using the python module [pycha](http://bitbucket.org/lgs/pycha/).
 
 
 # Requirements
@@ -17,10 +17,11 @@ using the python module pycha.
 # Usage
 
 ## standard mode
-generate a pie chart using the default options:
-$ python main.py -u username
+generate a pie chart using the default options:  
+`$ python main.py -u username`
 
 there are several options to configure the behaviour of scaicha:
+<pre>
   -u <arg>, --user <arg>        last.fm user name (required)
   -p <arg>, --period <arg>      period of top artists (3, 6, 12; default: overall)
   -i <arg>, --ignores <arg>     comma separated list of tags to ignore, e.g. "hip hop,rap"
@@ -31,42 +32,48 @@ there are several options to configure the behaviour of scaicha:
   -l <arg>, --lighten <arg>     lighten base color by given factor (between 0.0 and 1.0)
   -r <arg>, --resize <arg>      resize image
   -s      , --score             draw score
+</pre>
 
 
 some examples:
 
-use only the top artists from the past three months:
-$ python main.py -u KarlKartoffel -p 3
+use only the top artists from the past three months:  
+`$ python main.py -u KarlKartoffel -p 3`
 
 define some tags to ignore:
-$ python main.py -u WilliamKidd -i "hip hop,french"
+`$ python main.py -u WilliamKidd -i "hip hop,french"`
 
-combine some tags, here: combine 'classic rock' and 'hard rock' into 'rock':
-$ python main.py -u CaptainFarell -j "rock:classic rock:hard rock"
-combine even more tags (note the usage of ':' and ','):
-$ python main.py -u CaptainFarell -j "rock:classic rock:hard rock,metal:heavy metal:power metal"
-you can even create new tags or rename existing ones if you like:
-$ python main.py -u CaptainFarell -j "good stuff:rock:metal,bad stuff:hiphop:rap,worst crap ever:indie"
+combine some tags, here: combine 'classic rock' and 'hard rock' into 'rock':  
+`$ python main.py -u CaptainFarell -j "rock:classic rock:hard rock"`  
+combine even more tags (note the usage of ':' and ','):  
+`$ python main.py -u CaptainFarell -j "rock:classic rock:hard rock,metal:heavy metal:power metal"`  
+you can even create new tags or rename existing ones if you like:  
+`$ python main.py -u CaptainFarell -j "good stuff:rock:metal,bad stuff:hiphop:rap,worst crap ever:indie"`
 
-draw a color gradient instead of the default rainbow colors:
-$ python main.py -u Pferdinand -c gradient
+draw a color gradient instead of the default rainbow colors:  
+`$ python main.py -u Pferdinand -c gradient`
 
-use another base color:
-$ python main.py -u AverageJoe -b "#7d00ff"
-$ python main.py -u JohnSmith -b maroon
+use another base color:  
+`$ python main.py -u AverageJoe -b "#7d00ff"`  
+`$ python main.py -u JohnSmith -b maroon`
 
-lighten base color slightly:
-$ python main.py -u AaronAronsen -l 0.3
+lighten base color slightly:  
+`$ python main.py -u AaronAronsen -l 0.3`
 
 note: all parameters can be combined
 
 
 ## CGI mode
 - enable CGI at your webserver
-- copy scaicha.py, main.py and settings.py in your CGI directory
-- set CGI to True in settings.py
+- copy `scaicha.py`, `main.py` and `settings.py` in your CGI directory
+- set `CGI` to `True` in `settings.py`
 - make sure your webserver is able to create new files inside the CGI directory in order to use the cache
-- place the cgi.html document in the webserver's html directory and adapt the location of main.py in the form
-- open cgi.html in your browser
+- place the `cgi.html` document in the webserver's html directory and adapt the location of `main.py` in the form
+- open `cgi.html` in your browser
 
 note: the CGI mode lacks proper testing, use at your own risk
+
+
+## License
+[GPL v3](http://www.gnu.org/licenses/gpl.html)
+(c) [Alexander Heinlein](http://choerbaert.org), [Deamon Hell](http://www.last.fm/user/Daemon_Hell)
