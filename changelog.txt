@@ -1,0 +1,22 @@
+2012-04-30 0.5
+- added option to combine different tags
+- moved to pycha 0.6.0, requires no patching anymore
+- replaced default random color picking by rainbow colors
+- added configuration option to choose between rainbow colors and color gradient
+- added configuration option to choose base color and lighten factor
+- added configuration option to set minimum tag percentage for 'other tags'
+- added CGI example
+- minor fix in tag percentage calculation algorithm
+
+2009-01-08 0.4
+- added score calculation algorithm
+- more object oriented code
+
+2008-12-26 0.3
+- added tag ignoring option
+- tags converted to lowercase
+
+2008-12-24 0.2
+- added artist and tag cache
+- better calculation algorithm
+- added CGI support

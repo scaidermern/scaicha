@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Scaicha CGI Example</title>
+<style type="text/css" media="screen">
+body { background: #e7e7e7; font-family: Verdana, sans-serif; font-size: 11pt; }
+#page { background: #ffffff; margin: 50px; border: 2px solid #c0c0c0; padding: 10px; }
+#header { background: #4b6983; border: 2px solid #7590ae; text-align: center; padding: 10px; color: #ffffff; }
+#header h1 { color: #ffffff; }
+#body { padding: 10px; }
+span.tt { font-family: monospace; }
+span.bold { font-weight: bold; }
+a:link { text-decoration: none; font-weight: bold; color: #C00; background: #ffc; }
+a:visited { text-decoration: none; font-weight: bold; color: #999; background: #ffc; }
+a:active { text-decoration: none; font-weight: bold; color: #F00; background: #FC0; }
+a:hover { text-decoration: none; color: #C00; background: #FC0; }
+table { border-collapse:collapse; }
+table,td,th { border-style: hidden; }
+td { text-align:right; }
+</style>
+</head>
+<body>
+<div id="page">
+ <div id="header">
+ <h1>Scaicha CGI Example</h1>
+  This is a simple example of using scaicha in CGI mode.
+ </div>
+ <div id="body">
+  <h2>Settings</h2>
+   <form action="cgi-bin/main.py" method="get">
+   <table>
+    <tr>
+     <td>user name:</td>
+     <td><input name="name" type="text" size="30" maxlength="30" /></td>
+    </tr>
+    <tr>
+     <td>period:</td>
+     <td><input type="radio" name="period" value="overall" checked="checked" />overall
+         <input type="radio" name="period" value="3" />3 months<br/>
+         <input type="radio" name="period" value="6" />6 months
+         <input type="radio" name="period" value="12" />12 months
+     </td>
+    </tr>
+    <tr>
+     <td>ignore tags:<br/>(comma separated list)</td>
+     <td><input name="ignore" type="text" size="30" maxlength="300" /></td>
+    </tr>
+    <tr>
+     <td>merge tags:<br/>(groups comma separated,<br/>tags colon separated)</td>
+     <td><input name="join" type="text" size="30" maxlength="300" /></td>
+    </tr>
+    <tr>
+     <td>minimum tag percentage:</td>
+     <td><input name="minTagPerc" type="text" size="3" maxlength="3" value="1.0" /></td>
+    </tr>
+    <tr>
+     <td>color scheme:</td>
+     <td><input type="radio" name="colorScheme" value="rainbow" checked="checked" />rainbow<br/>
+         <input type="radio" name="colorScheme" value="gradient" />gradient
+     </td>
+    </tr>
+    <tr>
+     <td>base color:<br/>(hex code or HTML 4.0 color name)</td>
+     <td><input name="baseColor" type="text" size="10" maxlength="10" /></td>
+    </tr>
+    <tr>
+     <td>lighten base color:<br/>(between 0.0 and 1.0)</td>
+     <td><input name="lighten" type="text" size="3" maxlength="3" value="0.0" /></td>
+    </tr>
+    <tr>
+     <td>resize:<br/>(widthxheight)</td>
+     <td><input name="size" type="text" size="7" maxlength="7" /></td>
+    </tr>
+    <tr>
+     <td>draw score:</td>
+     <td><input name="score" type="checkbox" /></td>
+    </tr>
+    <tr>
+     <td><input type="submit" value="generate" /></td>
+    </tr>
+   </table>
+   </form>
+
+  <h2>Setup</h2>
+   <p>Short setup instructions:</p>
+   <ul>
+    <li>enable CGI at your webserver</li>
+    <li>copy scaicha.py, main.py and settings.py in your CGI directory</li>
+    <li>set CGI to True in settings.py</li>
+    <li>make sure your webserver is able to create new files inside the CGI directory in order to use the cache</li>
+    <li>place the cgi.html document in the webserver's html directory and adapt the location of main.py in the form</li>
+    <li>open cgi.html in your browser</li>
+   </ul>
+  <p>
+    <a href="http://validator.w3.org/check?uri=referer"><img
+        src="http://www.w3.org/Icons/valid-xhtml10"
+        alt="Valid XHTML 1.0 Transitional" height="31" width="88" border="0" /></a>
+  </p>  
+ </div>
+</div>
+</body>
+</html>
