@@ -6,6 +6,8 @@ tag chart based on the top artists of an arbitrary [last.fm](http://last.fm) use
 The data is gathered with the help of the last.fm API and charts are drawn
 using the python module [pycha](http://bitbucket.org/lgs/pycha/).
 
+![scaidermern 6 month pie chart](http://choerbaert.org/scy/scaicha/scaidermern_6month_pie.png)
+
 
 # Requirements
 - python (>=2.5)
