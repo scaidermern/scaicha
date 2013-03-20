@@ -30,6 +30,8 @@ notes:
 - get [python](http://www.python.org/download/) (recommended: python 2.7)
 - get [pycairo](http://www.lfd.uci.edu/~gohlke/pythonlibs/#pycairo) matching your python version
 
+note: for the following examples to work you need to open *cmd.exe* and switch to the directory of the extracted scaicha archive.
+
 
 # Usage
 
@@ -41,18 +43,17 @@ example: generate a pie chart using the default options:
 - Windows: `python.exe main.py -u username`
 
 there are several options to configure the behaviour of scaicha:
-<pre>
-  -u <arg>, --user <arg>        last.fm user name (required)
-  -p <arg>, --period <arg>      period of top artists (3, 6, 12; default: overall)
-  -i <arg>, --ignores <arg>     comma separated list of tags to ignore, e.g. "hip hop,rap"
-  -j <arg>, --join <arg>        combines a list of tag groups. groups are separated by commas, tags by colon
-  -m <arg>, --minTagPerc <arg>  minimum tag percentage (default: 1.0), less occuring tags will be merged into other tags
-  -c <arg>, --colorScheme <arg> color scheme to use (rainbow (default) or gradient)
-  -b <arg>, --baseColor <arg>   base color to use (hex string or a HTML 4.0 color name)
-  -l <arg>, --lighten <arg>     lighten base color by given factor (between 0.0 and 1.0)
-  -r <arg>, --resize <arg>      resize image
-  -s      , --score             draw score
-</pre>
+
+    -u <arg>, --user <arg>        last.fm user name (required)
+    -p <arg>, --period <arg>      period of top artists (3, 6, 12; default: overall)
+    -i <arg>, --ignores <arg>     comma separated list of tags to ignore, e.g. "hip hop,rap"
+    -j <arg>, --join <arg>        combines a list of tag groups. groups are separated by commas, tags by colon
+    -m <arg>, --minTagPerc <arg>  minimum tag percentage (default: 1.0), less occuring tags will be merged into other tags
+    -c <arg>, --colorScheme <arg> color scheme to use (rainbow (default) or gradient)
+    -b <arg>, --baseColor <arg>   base color to use (hex string or a HTML 4.0 color name)
+    -l <arg>, --lighten <arg>     lighten base color by given factor (between 0.0 and 1.0)
+    -r <arg>, --resize <arg>      resize image
+    -s      , --score             draw score
 
 
 some examples:
