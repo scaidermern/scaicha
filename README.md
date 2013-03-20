@@ -17,7 +17,7 @@ using the python module [pycha](http://bitbucket.org/lgs/pycha/).
 
 
 # Installation
-get the latest version from [github](http://github.com/scaidermern/scaicha/archive/master.zip) and extract it
+get the [latest version from github](http://github.com/scaidermern/scaicha/archive/master.zip) and extract it
 
 ## Linux (Debian/Ubuntu)
 `apt-get install python python-cairo graphicsmagick graphicsmagick-imagemagick-compat`
