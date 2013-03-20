@@ -31,7 +31,9 @@ notes:
 Windows
 ~~~~~~~
 - get python (http://www.python.org/download/) (recommended: python 2.7)
-- get pycairo (http://www.lfd.uci.edu/~gohlke/pythonlibs/#pycairo) matching your python version 
+- get pycairo (http://www.lfd.uci.edu/~gohlke/pythonlibs/#pycairo) matching your python version
+
+note: for the following examples to work you need to open *cmd.exe* and switch to the directory of the extracted scaicha archive.
 
 
 Usage
