@@ -10,17 +10,35 @@ using the python module [pycha](http://bitbucket.org/lgs/pycha/).
 
 
 # Requirements
-- python (>=2.5)
+- python (>=2.5), note: untested with python 3
 - pycha (shipped, also needs cairo)
 - last.fm account with a sufficient number of submitted songs
 - convert from imagemagick or graphicsmagick (could be omitted with the help of some small code changes)
 
 
+# Installation
+get the latest version from [github](http://github.com/scaidermern/scaicha/archive/master.zip) and extract it
+
+## Linux (Debian/Ubuntu)
+`apt-get install python python-cairo graphicsmagick graphicsmagick-imagemagick-compat`
+
+notes:
+- recommended python version is 2.7
+- instead of *graphicsmagick graphicsmagick-imagemagick-compat* you can also install *imagemagick*
+
+## Windows
+- get [python](http://www.python.org/download/) (recommended: python 2.7)
+- get [pycairo](http://www.lfd.uci.edu/~gohlke/pythonlibs/#pycairo) matching your python version
+
+
 # Usage
 
 ## standard mode
-generate a pie chart using the default options:  
-`$ python main.py -u username`
+just execute the *main.py* with your *python* installation and supply at least the *-u* option including your username.
+
+example: generate a pie chart using the default options:  
+- Linux: `$ python main.py -u username`
+- Windows: `python.exe main.py -u username`
 
 there are several options to configure the behaviour of scaicha:
 <pre>
