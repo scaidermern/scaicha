@@ -68,7 +68,9 @@ class scaicha:
         self.color_lighten_fac = 0.0
         self.ignored_tags  = []
         self.combined_tags = []
-        self.score = False
+        self.draw_score = False
+        self.do_substitute_tags = True
+        self.do_dump_tags = False
         self.filename = ''
         self.size = 0
         self.tag_count  = 0.0
@@ -126,13 +128,22 @@ class scaicha:
         self.size = size
         
     def set_score(self):
-        self.score = True
+        self.draw_score = True
+    
+    def set_dump_tags(self):
+        self.do_dump_tags = True
+    
+    def unset_substitute_tags(self):
+        self.do_substitute_tags = False
     
     def get_filename(self):
         if not self.filename:
             self.filename       = '%s_%s_pie.png' % (self.username, self.period)
             self.filename_score = '%s_%s_score.png' % (self.username, self.period)
         return self.filename
+    
+    def get_tags_filename(self):
+        return '%s_%s_tags.txt' % (self.username, self.period)
 
     def get_artists(self):
         # file name of user cache, no slashes allowed
@@ -194,21 +205,25 @@ class scaicha:
                     total_tag_values += int(element.text)
             
             # now calculate the tag percentage and generate the tag list
-            name = None
+            tag_name = None
             for element in iter:
                 if (element.tag == 'name'):
-                    name = element.text.replace('-','').lower()
+                    tag_name = element.text.lower()
+                    for bad_char in "-/": # remove some bad chars, reduces number of differently spelled tags with same meaning
+                        tag_name = tag_name.replace(bad_char, "")#
+                    while "  " in tag_name: # replace duplicated whitespaces
+                        tag_name = tag_name.replace("  ", " ")
                 if ((element.tag == 'count') and (element.text != '0')):
                     art_tag_perc  = int(element.text) / float(total_tag_values) * 100.0
                     art_play_perc = (art_play_count / float(self.total_play_count)) * 100.0
                     tag_value = art_tag_perc * float(art_play_perc) / 100.0
-                    if name in tags:
-                        tags[name] += tag_value
+                    if tag_name in tags:
+                        tags[tag_name] += tag_value
                     else:
-                        tags[name] = tag_value
+                        tags[tag_name] = tag_value
 
                     self.tag_count += tag_value
-                    name = None
+                    tag_name = None
 
         return tags
 
@@ -317,6 +332,73 @@ class scaicha:
         ctx.fill()
 
         surface.write_to_png(self.filename_score)
+
+    # substitutes misspelled tags, if enabled
+    def substitute_tags(self, tags):
+        # dictionary of tag substitions
+        # note: this dict will have the opposite format of the file,
+        #       the keys will get replaced by their values
+        substitutions = {}
+        
+        # parse substitution file
+        fileName = "tag_substitutions.txt"
+        file = open(fileName, "r")
+        lineNum = 0
+        for line in file:
+            lineNum += 1
+            line = line.rstrip("\n")
+            
+            if len(line) == 0 or line.startswith("#"): continue # skip empty lines and comments
+            
+            separator = line.find(":") # separator between main tag and substitution list
+            if separator == -1:
+                if not CGI: print "error: %s:%s has invalid format" % (fileName, lineNum)
+                continue
+            
+            mainTag = line[:separator]
+            tagSubsList = line[separator + 1:]
+            for tagSubs in tagSubsList.split(","): # separator between tags in substitution list
+                tagSubs = tagSubs.lstrip(" ").rstrip(" ")
+                if tagSubs == mainTag:
+                    if not CGI: print "warning: %s:%s contains main tag '%s' in substitution list" % (fileName, lineNum, mainTag)
+                else:
+                    substitutions[tagSubs] = mainTag
+        file.close()
+        
+        # substitute tags
+        tagDelList = []
+        tagAddDict = {}
+        for tag in tags:
+            if tag in substitutions:
+                mainTag = substitutions[tag]
+                
+                # substitute tag by adding its score to the
+                # main tag and deleting the substituted tag
+                subsScore = tags[tag]
+                if mainTag in tags:
+                    tags[mainTag] += subsScore
+                else:
+                    tagAddDict[mainTag] = subsScore
+                tagDelList.append(tag)
+        
+        # delete substituted tags
+        for tag in tagDelList:
+            del tags[tag]
+        # add tag substitutions previously not present
+        tags.update(tagAddDict)
+        
+        return tags
+    
+    # dumps tags to file, if enabled
+    def dump(self, tags):
+        # sort tags by their count
+        tagList = sorted(tags.iteritems(), key = itemgetter(1))
+        # reverse to dump most occuring tag first
+        tagList.reverse()
+        
+        with open(self.get_tags_filename(), "w") as file:
+            for tag, count in tagList:
+                file.write("%s\t%s\n" % (count, tag.encode("utf-8")))
     
     def combine_tags(self, tags):
         for combination in self.combined_tags:
@@ -354,7 +436,11 @@ class scaicha:
             return
         
         tags = self.get_tags(arts)
+        if self.do_substitute_tags:
+            tags = self.substitute_tags(tags)
         tags = self.combine_tags(tags)
+        if self.do_dump_tags:
+            self.dump(tags)
         tags = self.trim_tags(tags)
         
         filename = self.get_filename()
@@ -365,7 +451,7 @@ class scaicha:
         # draw username and date to image
         os.popen('DATE=$(date "+%%F"); convert -pointsize 11 -rotate 90 -draw "gravity SouthWest text 0,0 \\"%s %s $DATE by scaicha\\"" -rotate -90 ./%s ./%s' % (self.username, self.period, filename, filename))
         
-        if self.score:
+        if self.draw_score:
             score = self.calculate_score(tags)
             self.draw_score(score)
             os.popen('montage -tile 1x -background none -geometry +0+0 ./%s ./%s ./%s' % (self.filename_score, filename, filename))

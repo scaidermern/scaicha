@@ -44,7 +44,9 @@ def usage(name):
     print '  -b <arg>, --baseColor <arg>   base color to use (hex string or a HTML 4.0 color name)'
     print '  -l <arg>, --lighten <arg>     lighten base color by given factor (between 0.0 and 1.0)'
     print '  -r <arg>, --resize <arg>      resize image'
-    print '  -s      , --score             draw score'
+    print '  -s      , --score             enable score drawing'
+    print '  -d      , --dump              enable dumping tags to file'
+    print '  -t,     , --tagSubstitution   disable substitution of misspelled tags'
     print '  -h      , --help              print this help and exit'
     print
 
@@ -71,7 +73,7 @@ def run_standalone(s):
      
     try:
         # get command line arguments
-        opts, args = getopt.getopt(sys.argv[1:], 'u:p:i:j:m:c:b:l:r:sh', ['user=', 'period=', 'ignore=', 'join=', 'minTagPerc=', 'colorScheme=', 'baseColor=', 'lighten=', 'resize=', 'score', 'help'])
+        opts, args = getopt.getopt(sys.argv[1:], 'u:p:i:j:m:c:b:l:r:sdth', ['user=', 'period=', 'ignore=', 'join=', 'minTagPerc=', 'colorScheme=', 'baseColor=', 'lighten=', 'resize=', 'score', 'dump', 'tagSubstitution', 'help'])
     except getopt.GetoptError:
         usage(sys.argv[0])
         raise RuntimeError, 'invalid argument specified'
@@ -102,6 +104,10 @@ def run_standalone(s):
                 s.set_size(arg)
         elif opt in ('-s', '--score'):
             s.set_score()
+        elif opt in ('-d', '--dump'):
+            s.set_dump_tags()
+        elif opt in ('-t', '--tagSubstitution'):
+            s.unset_tag_substitution()
         elif opt in ('-h', '--help'):
             usage(sys.argv[0])
             sys.exit(1)

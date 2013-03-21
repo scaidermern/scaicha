@@ -53,7 +53,10 @@ there are several options to configure the behaviour of scaicha:
     -b <arg>, --baseColor <arg>   base color to use (hex string or a HTML 4.0 color name)
     -l <arg>, --lighten <arg>     lighten base color by given factor (between 0.0 and 1.0)
     -r <arg>, --resize <arg>      resize image
-    -s      , --score             draw score
+    -s      , --score             enable score drawing
+    -d      , --dump              enable dumping tags to file
+    -t,     , --tagSubstitution   disable substitution of misspelled tags
+    -h      , --help              print this help and exit
 
 
 some examples:

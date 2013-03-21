@@ -1,0 +1,233 @@
+# list of tags to substitute
+#
+# format:
+#   left side: main tag followed by colon
+#   right side: list of tags to substitute with main tag, separated by ','
+#
+# notes:
+#   - leading and trailing whitespaces are automatically stripped
+#   - usually we use the more common version as the main tag
+#   - this list is mainly for correcting spelling errors, or different
+#     notations (spaces, hypens), or tags with the _same_ meaning and
+#     not for grouping similar tags together!
+#
+00s: 00's
+10s: 10's
+20s: 20's
+30s: 30's
+40s: 40's
+50s: 50's
+60s: 60's
+70s: 70's
+80s: 80's
+90s: 90's
+abstract hip hop: abstract hiphop
+a cappella: a capella
+a cappella metal: a capella metal
+aggro berlin: aggroberlin
+altcountry: alt country
+alternative hip hop: alternative hiphop
+american: america
+anarchopunk: anarcho punk
+anatolian: anatolia
+andalusian: andalusia
+anticapitalism: anticapitalist
+antifascist: anti fascist, antifaschistisch, antifascism, antifa
+arabian: arabic
+armenian: armenia
+asian: asia
+australian: australia
+austrian: austria
+avantgarde: avant garde
+avantgarde metal: avant garde metal
+bavarian: bavaria, bayern, bayrisch, bayerisch
+beautiful voices: beautiful voice
+belarusian: belarus
+belgian: belgium, belgisch
+black metal: blackmetal
+blues rock: bluesrock
+brazilian: brazil
+breakbeat: breakbeats
+britishfolk: british folk
+british punk: britishpunk
+britpop: brit pop
+britrock: brit rock
+canadian: canada
+catalan: catalonia
+celtic punk: celt punk
+chillout: chill out, chilled out
+classical: classic
+classic metal: classical metal
+composers: composer
+country rock: countryrock
+covers: cover
+dance punk: dancepunk
+danish: denmark
+dark neoclassical: dark neoclassic
+darkwave: dark wave
+death country: deathcountry
+death doom metal: deathdoom metal
+deathrock: death rock
+deutschpunk: deutsch punk
+deutschrap: deutsch rap
+deutschrock: deutsch rock
+dream pop: dreampop
+drill n bass: drill and bass, drill'n'bass
+dronestep: drone step
+drum and bass: drum n bass, drum'n'bass, drum & bass, drumnbass
+dubstep: dub step
+dub techno: dubtechno
+dutch: netherlands, nederlands, holland
+electrodub: electro dub
+electrofunk: electro funk
+electro house: electrohouse
+electroindustrial: electro industrial
+electro pop: electropop
+electropunk: electro punk
+electrorock: electro rock
+emo rap: emorap
+ethereal: etheral
+european: europe
+experimental hip hop: experimental hiphop
+favorite artists: favorite artist, favourite artist, favourite artists, favorite bands, favorite band, favourite bands, favourite band
+favorites: favourites, favorite, favourite
+favorite songs: favorite song, favourite songs, favourite song
+female fronted metal: femalefronted metal
+female vocalist: female vocalists, female vocal, female vocals, female singer, female singers
+finnish: finland
+folk punk: folkpunk
+folk rock: folkrock
+folktronica: folktronic
+french indie: french indi
+fun metal: funmetal
+funpunk: fun punk
+fuzz rock: fuzzrock
+georgian: georgia
+german electro: germanelectro
+german: germany, deutschland, deutsch
+german hip hop: german hiphop
+german indie: germanindie
+german reggae: germanreggae
+german rock: germanrock
+glitchhop: glitch hop
+gothic metal: goth metal
+gothic rock: goth rock
+goth n roll: goth and roll
+guitar gods: guitar god
+hamburger schule: hamburgerschule
+hardcore hip hop: hardcore hiphop
+hardcore punk: hardcorepunk
+hard rock: hardrock
+hard techno: hardtechno
+hard trance: hardtrance
+hawaiian: hawaii
+heavy power metal: power heavy metal
+hip hop: hiphop
+horror punk: horrorpunk
+humour: humor
+hungarian: hungary
+hyperdub: hyper dub
+icelandic: iceland
+indian: indish
+indie electronic: indieelectronic
+indie folk: indiefolk
+indie pop: indiepop
+indie rock: indierock
+indietronica: indie electronic, indielectronic, indietronics, indietronic
+indonesian: indonesia
+instrumental hip hop: instrumental hiphop
+irish: ireland
+irish speedfolk: irish speed folk
+israeli: israel
+italian: italy
+jamaican: jamaica
+jamaican ska: jamaica ska
+japanese: japan
+jazz hop: jazzhop
+jazz rap: jazzrap
+krautrock: kraut rock
+left wing: leftwing
+legends: legend
+male vocalist: male vocalists, male vocal, male vocals
+mashup: mash up
+medieval: medival, mittelalter folk, mittelalterfolk
+medieval metal: medievalmetal, mittelalter metal, mittelaltermetal
+medieval rock: medievalrock, mittelalter rock, mittelalterrock
+melancholic: melancholy, melancholie, melancholisch
+minimal techno: minimaltechno
+neo-classical metal: neo classical metal, neoclassical metal
+neoclassical: neoclassic
+neopsychedelia: neopsychedelic, neo psychedelic, 
+neosoul: neo soul
+netlabel: netlabels
+new zealand: new zealander
+noise rock: noiserock
+norwegian: norway
+nu jazz: nujazz
+numetal: nu metal
+nwobhm: new wave of british heavy metal
+old school hip hop: old school hiphop, oldschool hiphop, oldschool hip hop
+old school rap: oldschool rap
+opera metal: operatic metal
+pirate: pirates
+polish: poland
+polit hip hop: polithip hop, polit hiphop
+polit rock: politrock
+pop punk: poppunk
+pop rock: poprock
+portuguese: portugal
+postgrunge: post grunge
+posthardcore: post hardcore
+post-metal: postmetal, post metal
+postpunk: post punk
+post rap: postrap
+post-rock: postrock, post rock
+powernoise: power noise
+power pop: powerpop
+progressive rock: prog rock
+protopunk: proto punk
+psychedelic: psychodelic, psycodelic, psychadelic
+psychedelic rock: psychodelic rock
+psycho metal: psychometal
+punk rock: punkrock
+ragga metal: raggametal
+ragga punk: raggapunk
+rap metal: rapmetal
+reggae metal: reggaemetal
+rhythmic noise: rythmic noise
+rock n roll: rock 'n' roll, rock'n'roll, rock and roll, rock 'n roll
+romanian: romania
+russian: russia
+scandinavian: scandinavia
+scottish: scotland
+seen live: seenlive
+serbian: serbia, serbisch
+shoegaze: shoegazer, shoegazing
+singer songwriter: singersongwriter, singer-songwriter, singer songwriters, singersongwriters, singer/songwriter
+ska jazz: skajazz
+ska punk: skapunk
+songwriter: songwriters
+sound effect: soundeffect
+soundscape: soundscapes
+soundtrack: soundtracks
+spanish: spain
+speedfolk: speed folk
+stoner doom metal: stonerdoom metal
+stoner doom: stoner/doom, stonerdoom
+stoner rock: stonerrock
+street punk: streetpunk
+swedish: sweden
+swiss: switzerland
+synthpop: synth pop
+techhouse: tech house
+thrash metal: trash metal
+trash rock: trashrock
+trinidadian: trinidad
+trip hop: triphop
+trip rock: trip-rock, triprock
+turkish: turkey
+twotone: two tone, 2tone, 2 tone
+uk hip hop: uk hiphop
+underground hip hop: underground hiphop
+wicca: wiccan
+workers songs: worker songs
