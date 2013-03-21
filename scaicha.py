@@ -20,24 +20,24 @@
 #
 
 VER = '0.5'
-from settings import *
-# xml reading:
-import urllib
-# newer python?
-#from lxml import etree
-# python 2.5:
-import xml.etree.cElementTree as etree
 
 # pycha:
-import sys
 import cairo
 import pycha.pie
 import pycha.bar
 
-import os
-import time
+# own stuff:
 import math
+import os
+import string
+import sys
+import time
+import unicodedata
+import urllib
+import xml.etree.cElementTree as etree
 from operator import itemgetter
+
+from settings import *
 
 basicColors = dict(
     yellow='#ffff00',
@@ -73,9 +73,10 @@ class scaicha:
         self.do_dump_tags = False
         self.filename = ''
         self.size = 0
-        self.tag_count  = 0.0
+        self.tag_count = 0.0
         self.total_play_count = 0
-        self.other_tags = 0 # in percent
+        self.tags_perc = {}
+        self.other_tags_perc = 0
         
         # create cache directory if set and not existing
         if not os.path.exists(cache_dir):
@@ -144,10 +145,15 @@ class scaicha:
     
     def get_tags_filename(self):
         return '%s_%s_tags.txt' % (self.username, self.period)
-
-    def get_artists(self):
-        # file name of user cache, no slashes allowed
-        cache_file = ('%s%s_%s.user.cache' % (cache_dir, self.username.replace('/', '_').encode("utf-8"), self.period))
+        
+    def gen_valid_filename(self, filename):
+        valid_filename_chars = "-_.() %s%s" % (string.ascii_letters, string.digits)
+        cleaned_filename = unicodedata.normalize('NFKD', unicode(filename)).encode('ASCII', 'ignore')
+        return ''.join(c for c in cleaned_filename if c in valid_filename_chars)
+    
+    def get_artists_with_playcount(self):
+        # file name of user cache
+        cache_file = ('%s%s_%s.user.cache' % (cache_dir, self.gen_valid_filename(self.username), self.period))
         tree = None
         
         # try to use file from cache
@@ -175,8 +181,7 @@ class scaicha:
             cache.close()
         
         artists = list()
-        iter = tree.getiterator()
-        for element in iter:
+        for element in tree.getiterator():
             if (element.tag == 'name'):
                 name = element.text
             if (element.tag == 'playcount'):
@@ -184,23 +189,21 @@ class scaicha:
                 self.total_play_count += int(element.text)
         return artists
 
-    def get_tags(self, artists):
-        tags = dict()
-
-        for entry in artists:
-            # get artist name and play count
-            art_name = entry[0].replace(' ', '+').replace('/','+')
-            art_play_count = int(entry[1])
+    def get_tags_for_artists(self, artists_with_playcount):
+        self.tags = {}
+        
+        for artist, playcount in artists_with_playcount:
+            playcount = int(playcount)
             
-            # file name of artist cache, no slashes allowed
-            cache_file = ('%s%s.artist.cache' % (cache_dir, art_name.encode("utf-8")))
+            # file name of artist cache
+            cache_file = ('%s%s.artist.cache' % (cache_dir, self.gen_valid_filename(artist)))
             tree = None
             
             # try to use file from cache
             if os.path.exists(cache_file) == True \
             and time.time() - os.path.getmtime(cache_file) < cache_time \
             and os.path.getsize(cache_file) != 0:
-                if not CGI: print 'using tag data for', entry[0].encode("utf-8"), 'from cache'
+                if not CGI: print 'using tag data for', artist.encode("utf-8"), 'from cache'
                 cache = open(cache_file,'r')
                 # we will get an exception if the cache file is broken
                 try:
@@ -211,10 +214,10 @@ class scaicha:
                 
             # download file if cache failed
             if tree == None:
-                if not CGI: print "downloading tag data for", entry[0].encode("utf-8")
+                if not CGI: print "downloading tag data for", artist.encode("utf-8")
                 cache = open(cache_file,'w')
                 # get artist xml document
-                for st in urllib.urlopen((TAG_URL % art_name).encode("utf-8")):
+                for st in urllib.urlopen((TAG_URL % artist).encode("utf-8")):
                     cache.write(st)
                 cache.close()
                 cache = open(cache_file,'r')
@@ -240,17 +243,17 @@ class scaicha:
                         tag_name = tag_name.replace("  ", " ")
                 if ((element.tag == 'count') and (element.text != '0')):
                     art_tag_perc  = int(element.text) / float(total_tag_values) * 100.0
-                    art_play_perc = (art_play_count / float(self.total_play_count)) * 100.0
+                    art_play_perc = (playcount / float(self.total_play_count)) * 100.0
                     tag_value = art_tag_perc * float(art_play_perc) / 100.0
-                    if tag_name in tags:
-                        tags[tag_name] += tag_value
+                    if tag_name in self.tags:
+                        self.tags[tag_name] += tag_value
                     else:
-                        tags[tag_name] = tag_value
+                        self.tags[tag_name] = tag_value
 
                     self.tag_count += tag_value
                     tag_name = None
 
-        return tags
+        return self.tags
 
     def draw_pie_chart(self, tags):
         if not CGI: print 'drawing chart'
@@ -263,7 +266,7 @@ class scaicha:
         
         dataSet = [("{0} ({1:03.1f}%)".format(tag, count), [[0, count]]) for tag, count in tagList if tag != "other tags"]
         # insert 'other tags' at the end
-        dataSet.append(("{0} ({1:03.1f}%)".format('other tags', self.other_tags), [[0, self.other_tags]]))
+        dataSet.append(("{0} ({1:03.1f}%)".format('other tags', self.other_tags_perc), [[0, self.other_tags_perc]]))
         
         # lighten base color if requested
         init_color = self.base_color
@@ -300,7 +303,7 @@ class scaicha:
                 'borderColor' : '#ffffff',
                 'position': {
                     'top': 390,
-                    'left' : 140
+                    'left' : 150
                 }
             },
         }
@@ -449,7 +452,7 @@ class scaicha:
 
         for tag in tags.keys():
             if tags[tag] < self.min_tag_perc:
-                self.other_tags += tags[tag]
+                self.other_tags_perc += tags[tag]
                 del tags[tag]
         return tags
 
@@ -457,12 +460,12 @@ class scaicha:
         if not self.username:
             raise RuntimeError, 'no username specified'
 
-        arts = self.get_artists()
-        if len(arts) == 0:
+        artists_with_playcount = self.get_artists_with_playcount()
+        if len(artists_with_playcount) == 0:
             if not CGI: print "error: no artists found"
             return
         
-        tags = self.get_tags(arts)
+        tags = self.get_tags_for_artists(artists_with_playcount)
         if self.do_substitute_tags:
             tags = self.substitute_tags(tags)
         tags = self.combine_tags(tags)
