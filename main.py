@@ -123,8 +123,6 @@ def run_standalone(s):
        or os.path.getsize(s.get_filename()) == 0:
         s.run()
 
-    print 'chart written to', s.get_filename()
-
 def run_CGI(s):
     args = cgi.parse()
     

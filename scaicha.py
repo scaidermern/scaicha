@@ -286,6 +286,7 @@ class scaicha:
         chart.render()
         
         surface.write_to_png(self.get_filename())
+        if not CGI: print 'chart written to', self.get_filename()
 
     def calculate_score(self, tags):
         prescore1 = 0
@@ -399,6 +400,7 @@ class scaicha:
         with open(self.get_tags_filename(), "w") as file:
             for tag, count in tagList:
                 file.write("%s\t%s\n" % (count, tag.encode("utf-8")))
+        if not CGI: print 'tag statistic written to', self.get_tags_filename()
     
     def combine_tags(self, tags):
         for combination in self.combined_tags:

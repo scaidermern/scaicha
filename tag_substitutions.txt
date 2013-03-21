@@ -64,6 +64,7 @@ covers: cover
 dance punk: dancepunk
 danish: denmark
 dark neoclassical: dark neoclassic
+dark cabaret: dark cabret
 darkwave: dark wave
 death country: deathcountry
 death doom metal: deathdoom metal
@@ -110,6 +111,7 @@ german indie: germanindie
 german reggae: germanreggae
 german rock: germanrock
 glitchhop: glitch hop
+gothic country: goth country
 gothic metal: goth metal
 gothic rock: goth rock
 goth n roll: goth and roll
@@ -138,6 +140,7 @@ indonesian: indonesia
 instrumental hip hop: instrumental hiphop
 irish: ireland
 irish speedfolk: irish speed folk
+irish punk: irishpunk
 israeli: israel
 italian: italy
 jamaican: jamaica
@@ -150,7 +153,7 @@ left wing: leftwing
 legends: legend
 male vocalist: male vocalists, male vocal, male vocals
 mashup: mash up
-medieval: medival, mittelalter folk, mittelalterfolk
+medieval: medival, mediaeval, mittelalter folk, mittelalterfolk
 medieval metal: medievalmetal, mittelalter metal, mittelaltermetal
 medieval rock: medievalrock, mittelalter rock, mittelalterrock
 melancholic: melancholy, melancholie, melancholisch
@@ -166,6 +169,7 @@ norwegian: norway
 nu jazz: nujazz
 numetal: nu metal
 nwobhm: new wave of british heavy metal
+old school: oldschool
 old school hip hop: old school hiphop, oldschool hiphop, oldschool hip hop
 old school rap: oldschool rap
 opera metal: operatic metal
@@ -194,7 +198,7 @@ ragga metal: raggametal
 ragga punk: raggapunk
 rap metal: rapmetal
 reggae metal: reggaemetal
-rhythmic noise: rythmic noise
+rhythmic noise: rhytmic noise, rhythm noise
 rock n roll: rock 'n' roll, rock'n'roll, rock and roll, rock 'n roll
 romanian: romania
 russian: russia
