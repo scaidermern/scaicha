@@ -153,9 +153,10 @@ class scaicha:
         return '%s_%s_tags.txt' % (self.username, self.period)
         
     def gen_valid_filename(self, filename):
-        valid_filename_chars = "-_.() %s%s" % (string.ascii_letters, string.digits)
-        cleaned_filename = unicodedata.normalize('NFKD', unicode(filename)).encode('ASCII', 'ignore')
-        return ''.join(c for c in cleaned_filename if c in valid_filename_chars)
+        # note: doesn't handle ascii chars in 0-31 but let's hope they don't appear in artist names ;/
+        for char in '\/?*|:"<>':
+            filename = filename.replace(char, "+")
+        return filename
     
     def get_artists_with_playcount(self):
         # file name of user cache
@@ -226,7 +227,7 @@ class scaicha:
         if os.path.exists(cache_file) == True \
         and time.time() - os.path.getmtime(cache_file) < cache_time \
         and os.path.getsize(cache_file) != 0:
-            self.message('using tag data for ' + artist.encode("utf-8") + ' from cache')
+            self.message('using tag data for ' + artist.encode("utf-8") + ' from cache ' + cache_file.encode("utf-8"))
             cache = open(cache_file,'r')
             # we will get an exception if the cache file is broken
             try:
