@@ -2,7 +2,7 @@
 #
 # main.py: configuring and executing scaicha
 #
-# Copyright (C) 2008-2009,2012 Alexander Heinlein <alexander.heinlein@web.de>
+# Copyright (C) 2008-2009,2012-2013 Alexander Heinlein <alexander.heinlein@web.de>
 # Copyright (C) 2008-2009 Daemon Hell
 #
 # This program is free software; you can redistribute it and/or
