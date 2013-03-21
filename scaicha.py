@@ -31,6 +31,7 @@ import math
 import os
 import string
 import sys
+import threading
 import time
 import unicodedata
 import urllib
@@ -75,12 +76,17 @@ class scaicha:
         self.size = 0
         self.tag_count = 0.0
         self.total_play_count = 0
+        self.tags_lock = threading.Lock()
         self.tags_perc = {}
         self.other_tags_perc = 0
         
         # create cache directory if set and not existing
         if not os.path.exists(cache_dir):
             os.mkdir(cache_dir)
+    
+    def message(self, msg):
+        if CGI: return
+        sys.stdout.write(msg + '\n')
     
     def set_username(self, name):
         self.username = name
@@ -160,18 +166,18 @@ class scaicha:
         if os.path.exists(cache_file) == True \
         and time.time() - os.path.getmtime(cache_file ) < cache_time \
         and os.path.getsize(cache_file) != 0:
-            if not CGI: print 'using top artists from cache'
+            self.message('using top artists from cache')
             cache = open(cache_file,'r')
             # we will get an exception if the cache file is broken
             try:
                 tree = etree.parse(cache)
             except Exception, e:
-                if not CGI: print 'top artists cache file', cache_file.encode("utf-8"), 'seems to be broken'
+                self.message('top artists cache file "' + cache_file.encode("utf-8") + '" seems to be broken')
                 tree = None
         
         # download file if cache failed
         if tree == None:
-            if not CGI: print "downloading top artists for", self.username
+            self.message('downloading top artists for ' + self.username)
             cache = open(cache_file,'w')
             for st in urllib.urlopen(ART_URL % (self.username,self.period)):
                 cache.write(st)
@@ -192,71 +198,90 @@ class scaicha:
     def get_tags_for_artists(self, artists_with_playcount):
         self.tags = {}
         
+        max_threads = 10
+        running_threads = []
         for artist, playcount in artists_with_playcount:
-            playcount = int(playcount)
+            # limit maximum number of concurrent threads
+            while len(running_threads) >= max_threads:
+                running_threads = [ thread for thread in running_threads if thread.isAlive() ]
+                if len(running_threads) >= max_threads:
+                    time.sleep(0.01)
             
-            # file name of artist cache
-            cache_file = ('%s%s.artist.cache' % (cache_dir, self.gen_valid_filename(artist)))
-            tree = None
+            thread = threading.Thread(target=self.get_tags_for_artist, args=(artist, int(playcount),))
+            thread.start()
+            running_threads.append(thread)
+        
+        # wait for remaining threads to finish
+        for thread in running_threads:
+            thread.join()
             
-            # try to use file from cache
-            if os.path.exists(cache_file) == True \
-            and time.time() - os.path.getmtime(cache_file) < cache_time \
-            and os.path.getsize(cache_file) != 0:
-                if not CGI: print 'using tag data for', artist.encode("utf-8"), 'from cache'
-                cache = open(cache_file,'r')
-                # we will get an exception if the cache file is broken
-                try:
-                    tree = etree.parse(cache)
-                except Exception, e:
-                    if not CGI: print 'tag data cache file', cache_file.encode("utf-8"), 'seems to be broken'
-                    tree = None
-                
-            # download file if cache failed
-            if tree == None:
-                if not CGI: print "downloading tag data for", artist.encode("utf-8")
-                cache = open(cache_file,'w')
-                # get artist xml document
-                for st in urllib.urlopen((TAG_URL % artist).encode("utf-8")):
-                    cache.write(st)
-                cache.close()
-                cache = open(cache_file,'r')
-                tree = etree.parse(cache)
-                cache.close()
-            
-            # as the tag numbers from last.fm are a rather stupid value (neither an absolute value nor a real ratio)
-            # we need to sum up all tag values per artist first in order to calculate the tag percentage
-            iter = tree.getiterator()
-            total_tag_values = 0
-            for element in iter:
-                if ((element.tag == 'count') and (element.text != '0')):
-                    total_tag_values += int(element.text)
-            
-            # now calculate the tag percentage and generate the tag list
-            tag_name = None
-            for element in iter:
-                if (element.tag == 'name'):
-                    tag_name = element.text.lower()
-                    for bad_char in "-/": # remove some bad chars, reduces number of differently spelled tags with same meaning
-                        tag_name = tag_name.replace(bad_char, "")#
-                    while "  " in tag_name: # replace duplicated whitespaces
-                        tag_name = tag_name.replace("  ", " ")
-                if ((element.tag == 'count') and (element.text != '0')):
-                    art_tag_perc  = int(element.text) / float(total_tag_values) * 100.0
-                    art_play_perc = (playcount / float(self.total_play_count)) * 100.0
-                    tag_value = art_tag_perc * float(art_play_perc) / 100.0
-                    if tag_name in self.tags:
-                        self.tags[tag_name] += tag_value
-                    else:
-                        self.tags[tag_name] = tag_value
-
-                    self.tag_count += tag_value
-                    tag_name = None
-
         return self.tags
+    
+    def get_tags_for_artist(self, artist, playcount):
+        # file name of artist cache
+        cache_file = ('%s%s.artist.cache' % (cache_dir, self.gen_valid_filename(artist)))
+        tree = None
+        
+        # try to use file from cache
+        if os.path.exists(cache_file) == True \
+        and time.time() - os.path.getmtime(cache_file) < cache_time \
+        and os.path.getsize(cache_file) != 0:
+            self.message('using tag data for ' + artist.encode("utf-8") + ' from cache')
+            cache = open(cache_file,'r')
+            # we will get an exception if the cache file is broken
+            try:
+                tree = etree.parse(cache)
+            except Exception, e:
+                self.message('tag data cache file "' + cache_file.encode("utf-8") + '" seems to be broken')
+                tree = None
+            
+        # download file if cache failed
+        if tree == None:
+            self.message("downloading tag data for " + artist.encode("utf-8"))
+            cache = open(cache_file,'w')
+            # get artist xml document
+            for st in urllib.urlopen((TAG_URL % artist).encode("utf-8")):
+                cache.write(st)
+            cache.close()
+            cache = open(cache_file,'r')
+            tree = etree.parse(cache)
+            cache.close()
+        
+        # as the tag numbers from last.fm are a rather stupid value (neither an absolute value nor a real ratio)
+        # we need to sum up all tag values per artist first in order to calculate the tag percentage
+        iter = tree.getiterator()
+        total_tag_values = 0
+        for element in iter:
+            if ((element.tag == 'count') and (element.text != '0')):
+                total_tag_values += int(element.text)
+        
+        # now calculate the tag percentage and generate the tag list
+        tag_name = None
+        for element in iter:
+            if (element.tag == 'name'):
+                tag_name = element.text.lower()
+                for bad_char in "-/": # remove some bad chars, reduces number of differently spelled tags with same meaning
+                    tag_name = tag_name.replace(bad_char, "")#
+                while "  " in tag_name: # replace duplicated whitespaces
+                    tag_name = tag_name.replace("  ", " ")
+            if ((element.tag == 'count') and (element.text != '0')):
+                art_tag_perc  = int(element.text) / float(total_tag_values) * 100.0
+                art_play_perc = (playcount / float(self.total_play_count)) * 100.0
+                tag_value = art_tag_perc * float(art_play_perc) / 100.0
+                
+                self.tags_lock.acquire()
+                if tag_name in self.tags:
+                    self.tags[tag_name] += tag_value
+                else:
+                    self.tags[tag_name] = tag_value
+
+                self.tag_count += tag_value
+                self.tags_lock.release()
+                
+                tag_name = None
 
     def draw_pie_chart(self, tags):
-        if not CGI: print 'drawing chart'
+        self.message('drawing chart')
         surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, 440, 1500)
 
         # sort tags by their count
@@ -314,7 +339,7 @@ class scaicha:
         chart.render()
         
         surface.write_to_png(self.get_filename())
-        if not CGI: print 'chart written to', self.get_filename()
+        self.message('chart written to ' + self.get_filename())
 
     def calculate_score(self, tags):
         prescore1 = 0
@@ -333,7 +358,7 @@ class scaicha:
         return 150 * math.exp(-3 * (prescore * prescore1)**2)
 
     def draw_score(self, score):
-        if not CGI: print 'drawing score'
+        self.message('drawing score')
         score = int(score)
         surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, 200, 50)
         ctx = cairo.Context(surface)
@@ -381,7 +406,7 @@ class scaicha:
             
             separator = line.find(":") # separator between main tag and substitution list
             if separator == -1:
-                if not CGI: print "error: %s:%s has invalid format" % (fileName, lineNum)
+                self.message("error: %s:%s has invalid format" % (fileName, lineNum))
                 continue
             
             mainTag = line[:separator]
@@ -389,7 +414,7 @@ class scaicha:
             for tagSubs in tagSubsList.split(","): # separator between tags in substitution list
                 tagSubs = tagSubs.lstrip(" ").rstrip(" ")
                 if tagSubs == mainTag:
-                    if not CGI: print "warning: %s:%s contains main tag '%s' in substitution list" % (fileName, lineNum, mainTag)
+                    self.message("warning: %s:%s contains main tag '%s' in substitution list" % (fileName, lineNum, mainTag))
                 else:
                     substitutions[tagSubs] = mainTag
         file.close()
@@ -428,7 +453,7 @@ class scaicha:
         with open(self.get_tags_filename(), "w") as file:
             for tag, count in tagList:
                 file.write("%s\t%s\n" % (count, tag.encode("utf-8")))
-        if not CGI: print 'tag statistic written to', self.get_tags_filename()
+        self.message('tag statistic written to ' + self.get_tags_filename())
     
     def combine_tags(self, tags):
         for combination in self.combined_tags:
@@ -462,7 +487,7 @@ class scaicha:
 
         artists_with_playcount = self.get_artists_with_playcount()
         if len(artists_with_playcount) == 0:
-            if not CGI: print "error: no artists found"
+            self.message("error: no artists found")
             return
         
         tags = self.get_tags_for_artists(artists_with_playcount)
