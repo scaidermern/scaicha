@@ -148,19 +148,31 @@ class scaicha:
     def get_artists(self):
         # file name of user cache, no slashes allowed
         cache_file = ('%s%s_%s.user.cache' % (cache_dir, self.username.replace('/', '_').encode("utf-8"), self.period))
-        if os.path.exists(cache_file) == False \
-        or time.time() - os.path.getmtime(cache_file ) > cache_time \
-        or os.path.getsize(cache_file) == 0:
+        tree = None
+        
+        # try to use file from cache
+        if os.path.exists(cache_file) == True \
+        and time.time() - os.path.getmtime(cache_file ) < cache_time \
+        and os.path.getsize(cache_file) != 0:
+            if not CGI: print 'using top artists from cache'
+            cache = open(cache_file,'r')
+            # we will get an exception if the cache file is broken
+            try:
+                tree = etree.parse(cache)
+            except Exception, e:
+                if not CGI: print 'top artists cache file', cache_file.encode("utf-8"), 'seems to be broken'
+                tree = None
+        
+        # download file if cache failed
+        if tree == None:
             if not CGI: print "downloading top artists for", self.username
-            tree = etree.parse(urllib.urlopen(ART_URL % (self.username, self.period)))
-            cache = open (cache_file,'w')
+            cache = open(cache_file,'w')
             for st in urllib.urlopen(ART_URL % (self.username,self.period)):
                 cache.write(st)
             cache.close()
-        elif not CGI: print 'using top artists from cache'
-        cache = open(cache_file,'r')
-        tree = etree.parse(cache)
-        cache.close()
+            cache = open(cache_file,'r')
+            tree = etree.parse(cache)
+            cache.close()
         
         artists = list()
         iter = tree.getiterator()
@@ -182,19 +194,32 @@ class scaicha:
             
             # file name of artist cache, no slashes allowed
             cache_file = ('%s%s.artist.cache' % (cache_dir, art_name.encode("utf-8")))
-            if os.path.exists(cache_file) == False \
-            or time.time() - os.path.getmtime(cache_file) > cache_time \
-            or os.path.getsize(cache_file) == 0:
+            tree = None
+            
+            # try to use file from cache
+            if os.path.exists(cache_file) == True \
+            and time.time() - os.path.getmtime(cache_file) < cache_time \
+            and os.path.getsize(cache_file) != 0:
+                if not CGI: print 'using tag data for', entry[0].encode("utf-8"), 'from cache'
+                cache = open(cache_file,'r')
+                # we will get an exception if the cache file is broken
+                try:
+                    tree = etree.parse(cache)
+                except Exception, e:
+                    if not CGI: print 'tag data cache file', cache_file.encode("utf-8"), 'seems to be broken'
+                    tree = None
+                
+            # download file if cache failed
+            if tree == None:
                 if not CGI: print "downloading tag data for", entry[0].encode("utf-8")
-                cache = open (cache_file,'w')
+                cache = open(cache_file,'w')
                 # get artist xml document
                 for st in urllib.urlopen((TAG_URL % art_name).encode("utf-8")):
                     cache.write(st)
                 cache.close()
-            elif not CGI: print 'using tag data for', entry[0].encode("utf-8"), 'from cache'
-            cache = open (cache_file,'r')
-            tree = etree.parse(cache)
-            cache.close()
+                cache = open(cache_file,'r')
+                tree = etree.parse(cache)
+                cache.close()
             
             # as the tag numbers from last.fm are a rather stupid value (neither an absolute value nor a real ratio)
             # we need to sum up all tag values per artist first in order to calculate the tag percentage
