@@ -153,8 +153,8 @@ class scaicha:
         return '%s_%s_tags.txt' % (self.username, self.period)
         
     def gen_valid_filename(self, filename):
-        # note: doesn't handle ascii chars in 0-31 but let's hope they don't appear in artist names ;/
-        for char in '\/?*|:"<>':
+        invalid_chars = '\/?*|:"<>' + "".join( [ chr(val) for val in range(0, 31) ] )
+        for char in invalid_chars:
             filename = filename.replace(char, "+")
         return filename
     
@@ -167,13 +167,13 @@ class scaicha:
         if os.path.exists(cache_file) == True \
         and time.time() - os.path.getmtime(cache_file ) < cache_time \
         and os.path.getsize(cache_file) != 0:
-            self.message('using top artists from cache')
+            self.message('using top artists from cache ("%s")' % cache_file.encode("utf-8"))
             cache = open(cache_file,'r')
             # we will get an exception if the cache file is broken
             try:
                 tree = etree.parse(cache)
             except Exception, e:
-                self.message('top artists cache file "' + cache_file.encode("utf-8") + '" seems to be broken')
+                self.message('top artists cache file "%s" seems to be broken' % cache_file.encode("utf-8"))
                 tree = None
         
         # download file if cache failed
@@ -227,18 +227,18 @@ class scaicha:
         if os.path.exists(cache_file) == True \
         and time.time() - os.path.getmtime(cache_file) < cache_time \
         and os.path.getsize(cache_file) != 0:
-            self.message('using tag data for ' + artist.encode("utf-8") + ' from cache ' + cache_file.encode("utf-8"))
+            self.message('using tag data for %s from cache ("%s")' % (artist.encode("utf-8"), cache_file.encode("utf-8")))
             cache = open(cache_file,'r')
             # we will get an exception if the cache file is broken
             try:
                 tree = etree.parse(cache)
             except Exception, e:
-                self.message('tag data cache file "' + cache_file.encode("utf-8") + '" seems to be broken')
+                self.message('tag data cache file "%s" seems to be broken' % cache_file.encode("utf-8"))
                 tree = None
             
         # download file if cache failed
         if tree == None:
-            self.message("downloading tag data for " + artist.encode("utf-8"))
+            self.message('downloading tag data for %s' % artist.encode("utf-8"))
             cache = open(cache_file,'w')
             # get artist xml document
             for st in urllib.urlopen((TAG_URL % artist).encode("utf-8")):
