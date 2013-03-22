@@ -25,6 +25,7 @@
 import difflib
 import getopt
 import sys
+from collections import defaultdict
 from itertools import combinations
 
 def printUsage(name):
@@ -43,13 +44,13 @@ if __name__ == '__main__':
         raise RuntimeError, "invalid argument specified"
     
     fast = False
-    minRatio = 0.9
+    minSimilarityRatio = 0.9
     for opt, arg in opts:
         if opt in ("-f", "--fast"):
             fast = True
         elif opt in ("-r", "--ratio"):
             try:
-                minRatio = float(arg)
+                minSimilarityRatio = float(arg)
             except ValueError:
                 raise RuntimeError, "ratio argument '" + arg + "' is not a float!"
         elif opt in ("-h", "--help"):
@@ -63,23 +64,36 @@ if __name__ == '__main__':
         raise RuntimeError, "no files specified!"
     
     # parse tag dumps
-    tagSet = set()
+    tagSet = defaultdict(int)
     for file in files:
         print "parsing file", file
         file = open(file, "r")
         for line in file:
             line = line.rstrip("\n")
-            tagSet.add(line.split("\t")[1])
+            ratio, name = line.split("\t")
+            if name not in tagSet:
+                tagSet[name] = ratio
+            else:
+                tagSet[name] = max(ratio, tagSet[name])
         file.close()
 
     # compare each tag with each other one
     print "searching for similar tags (this will take some time)"
     for tag, otherTag in combinations(tagSet, 2):
-        ratio = None
+        similarityRatio = None
         if not fast:
-            ratio = difflib.SequenceMatcher(None, tag, otherTag).ratio()
+            similarityRatio = difflib.SequenceMatcher(None, tag, otherTag).ratio()
         else:
-            ratio = difflib.SequenceMatcher(None, tag, otherTag).quick_ratio()
-        if ratio > minRatio:
-            print "'%s' and '%s' have a similarity ratio of %s" % (tag, otherTag, ratio)
+            similarityRatio = difflib.SequenceMatcher(None, tag, otherTag).quick_ratio()
+            
+        if similarityRatio >= minSimilarityRatio:
+            tagOccurenceRatio = tagSet[tag]
+            otherTagOccurenceRatio = tagSet[otherTag]
+            if tagOccurenceRatio >= otherTagOccurenceRatio:
+                moreCommonTag, moreCommonTagOccurenceRatio = tag, tagOccurenceRatio
+                lessCommonTag, lessCommonTagOccurenceRatio = otherTag, otherTagOccurenceRatio
+            else:
+                moreCommonTag, moreCommonTagOccurenceRatio = otherTag, otherTagOccurenceRatio
+                lessCommonTag, lessCommonTagOccurenceRatio = tag, tagOccurenceRatio
+            print "'%s' (%s%%) and '%s' (%s%%) have a similarity ratio of %s" % (moreCommonTag, moreCommonTagOccurenceRatio, lessCommonTag, lessCommonTagOccurenceRatio, similarityRatio)
     
