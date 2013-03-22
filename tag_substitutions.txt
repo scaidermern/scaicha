@@ -31,8 +31,11 @@ afrobeat: afro beat, afro-beat
 afrojazz: afro jazz, afro-jazz
 afrosoul: afro soul, afro-soul
 aggro berlin: aggroberlin
+aleyster crowley: aleister crowley, aleystercrowley, aleistercrowley
+algerian: algeria
 altcountry: alt country
 alternative hip hop: alternative hiphop
+ambient trance: ambienttrance
 american: america
 anarchopunk: anarcho punk
 anatolian: anatolia
@@ -58,6 +61,7 @@ belarusian: belarus
 belgian: belgium, belgisch
 black metal: blackmetal
 blues rock: bluesrock
+brazilian: brasilian, brazilia, brasilia
 brazilian: brazil
 breakbeat: breakbeats
 british folk rock: british folkrock
@@ -65,16 +69,20 @@ british folk: britishfolk
 british punk: britishpunk
 britpop: brit pop
 britrock: brit rock
+bulgarian: bulgaria
 californian: california
 canadian: canada
 catalan: catala, catalana
 catalan: catalonia
 celtic punk: celt punk
+chant: chants
 chillout: chill out, chilled out
 christian: christians, christian band, christian bands
 classic metal: classical metal
 classical: classic
 composers: composer
+contemporary rnb: contemporary r&b
+corsican: corsica
 country rock: countryrock
 covers: cover
 croatian: croatia
@@ -82,19 +90,27 @@ cuban: cubana, cubano
 dance pop: dancepop
 dance punk: dancepunk
 dance rock: dancerock
+dancehall: dance hall
 danish: denmark
 dark ambient: darkambient
 dark cabaret: dark cabret
+dark electro: darkelectro
 dark folk: darkfolk
 dark neoclassical: dark neoclassic
+dark psytrance: darkpsytrance, dark psy trance
+darkpsy: dark psy
 darkwave: dark wave
 death country: deathcountry
 death doom metal: deathdoom metal
+death doom: deathdoom
 deathgrind: death grind
 deathrock: death rock
+deep house: deephouse
 deutschpunk: deutsch punk
 deutschrap: deutsch rap
 deutschrock: deutsch rock
+doom death metal: doomdeath metal, doom deathmetal, doomdeathmetal
+downtempo: down tempo
 dream pop: dreampop
 drill n bass: drill and bass, drill'n'bass
 dronestep: drone step
@@ -105,14 +121,21 @@ dutch: netherlands, nederlands, holland
 east coast hip hop: east coast hiphop, eastcoast hiphop, eastcoast hip hop
 east coast rap: eastcoast rap
 east coast: eastcoast
+eastern european: eastern europe
+easy listening: easylistening
+electro hop: electrohop
 electro house: electrohouse
+electro jazz: electrojazz
 electro pop: electropop
+electro swing: electroswing
 electrodub: electro dub
 electrofunk: electro funk
 electroindustrial: electro industrial
+electromedieval: electro medieval
 electropunk: electro punk
 electrorock: electro rock
 emo rap: emorap
+ensemble: ensembles
 ethereal: etheral
 european: europe
 experimental hip hop: experimental hiphop
@@ -127,9 +150,12 @@ folk rock: folkrock
 folktronica: folktronic
 french indie: french indi
 fun metal: funmetal
+funk punk: funkpunk
 funk rock: funkrock
 funpunk: fun punk
+futurepop: future pop
 fuzz rock: fuzzrock
+gangster rap: gangsterrap
 georgian: georgia
 german electro: germanelectro
 german hip hop: german hiphop
@@ -138,8 +164,10 @@ german pop: germanpop, germany pop
 german rap: germanrap
 german reggae: germanreggae
 german rock: germanrock
-german: germany, deutschland, deutsch
+german: germany, germans, deutschland, deutsch, deutsche, deutsches
+girlband: girl band, girlsband, girlbands, girls band, girl group, girlgroup
 glitchhop: glitch hop
+goa trance: goatrance
 goth n roll: goth and roll
 gothic country: goth country
 gothic metal: goth metal
@@ -176,20 +204,24 @@ israeli: israel
 italian: italy, italia, italiano
 jamaican ska: jamaica ska
 jamaican: jamaica, jamaicans
+jamband: jam band, jambands, jam bands
 japanese: japan
 jazz bass: jazzbass
 jazz funk: jazzfunk
 jazz fusion: jazzfusion
 jazz guitar: jazzguitar
 jazz hop: jazzhop
+jazz house: jazzhouse
 jazz pop: jazzpop
 jazz rap: jazzrap
 jazz rock: jazzrock
-jazz house: jazzhouse
+korean: korea
 krautrock: kraut rock
+latin jazz: latinjazz
 latin: latino, latina
 left wing: leftwing
 legends: legend
+love songs: love song
 male vocalists: male vocalist, male vocal, male vocals, male singer, male singers, male voice, male voices
 mashup: mash up
 math rock: mathrock
@@ -198,6 +230,7 @@ medieval rock: medievalrock, mittelalter rock, mittelalterrock
 medieval: medival, mediaeval, mittelalter folk, mittelalterfolk
 melancholic: melancholy, melancholie, melancholisch
 minimal techno: minimaltechno
+modern classical: modern classic
 modern jazz: modernjazz
 neo-classical metal: neo classical metal, neoclassical metal
 neoclassical: neoclassic
@@ -208,6 +241,7 @@ neosoul: neo soul
 netlabel: netlabels
 new zealand: new zealander
 nigerian: nigeria
+noise pop: noisepop
 noise rock: noiserock
 norwegian: norway
 nu jazz: nujazz
@@ -218,13 +252,16 @@ old school rap: oldschool rap
 old school: oldschool
 oldies: oldie
 opera metal: operatic metal
+orchestra: orchestral
 pagan folk: paganfolk
 pirate: pirates
 polish: poland
 polit hip hop: polithip hop, polit hiphop
 polit rock: politrock
 pop punk: poppunk
+pop rap: poprap
 pop rock: poprock
+pop soul: popsoul
 portuguese: portugal
 post rap: postrap
 post-metal: postmetal, post metal
@@ -234,11 +271,13 @@ posthardcore: post hardcore
 postpunk: post punk
 power pop: powerpop
 powernoise: power noise
-progressive rock: prog rock
+progressive rock: progressiverock, prog rock
 protopunk: proto punk
+psyambient: psy ambient
 psychedelic rock: psychodelic rock
 psychedelic: psychodelic, psycodelic, psychadelic
 psycho metal: psychometal
+psytrance: psy trance
 punk pop: punkpop
 punk rock: punkrock
 ragga metal: raggametal
@@ -247,7 +286,8 @@ rap metal: rapmetal
 rap rock: raprock
 reggae metal: reggaemetal
 rhythmic noise: rhytmic noise, rhythm noise
-rock n roll: rock 'n' roll, rock'n'roll, rock and roll, rock 'n roll, rock & roll
+riot grrrl: riot grrl
+rock n roll: rock 'n' roll, rock'n'roll, rock and roll, rock 'n roll, rock n' roll, rock & roll
 rock pop: rockpop
 rocksteady: rock steady
 romanian: romania
@@ -261,6 +301,7 @@ singer songwriter: singersongwriter, singer-songwriter, singer songwriters, sing
 ska jazz: skajazz
 ska punk: skapunk
 skinhead: skinheads
+slovenian: slovenia
 smooth jazz: smoothjazz
 soft rock: softrock
 songwriter: songwriters
@@ -268,6 +309,7 @@ soul jazz: souljazz
 sound effect: soundeffect
 soundscape: soundscapes
 soundtrack: soundtracks
+space age pop: spaceagepop
 spanish: spain
 speedfolk: speed folk
 steampunk: steam punk
@@ -278,14 +320,15 @@ street punk: streetpunk
 swedish: sweden
 swiss: switzerland
 synth rock: synthrock
+synth: synthy
 synthpop: synth pop, synthipop
-death doom: deathdoom
-vocal: vocals
-bulgarian: bulgaria
 techhouse: tech house
+technopop: techno pop
+teenpop: teen pop
 third wave ska: thirdwave ska
 thrash metal: trash metal
 trash rock: trashrock
+trash: trashy
 trinidadian: trinidad
 trip hop: triphop
 trip rock: trip-rock, triprock
@@ -297,11 +340,10 @@ uk hip hop: uk hiphop
 underground hip hop: underground hiphop
 underground rap: undergroundrap
 violin: violins
+vocal: vocals
 west coast hip hop: west coast hiphop, westcoast hiphop, westcoast hip hop
 west coast rap: westcoast rap
 west coast: westcoast
 wicca: wiccan
 workers songs: worker songs
 world music: worldmusic
-corsican: corsica
-chant: chants
