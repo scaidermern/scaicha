@@ -38,6 +38,8 @@ import urllib
 import xml.etree.cElementTree as etree
 from operator import itemgetter
 
+from fileLock import FileLock
+
 from settings import *
 
 basicColors = dict(
@@ -163,29 +165,33 @@ class scaicha:
         cache_file = ('%s%s_%s.user.cache' % (cache_dir, self.gen_valid_filename(self.username), self.period))
         tree = None
         
-        # try to use file from cache
-        if os.path.exists(cache_file) == True \
-        and time.time() - os.path.getmtime(cache_file ) < cache_time \
-        and os.path.getsize(cache_file) != 0:
-            self.message('using top artists from cache ("%s")' % cache_file.encode("utf-8"))
-            cache = open(cache_file,'r')
-            # we will get an exception if the cache file is broken
-            try:
+        # lock the cache file to prevent conflicts with concurrent scaicha instances.
+        # locking needs to be done already when reading because another scaicha instance
+        # could still be writing into this file and we would read a broken file.
+        with FileLock(cache_file, timeout=10, delay=0.1) as lock:
+            # try to use file from cache
+            if os.path.exists(cache_file) == True \
+            and time.time() - os.path.getmtime(cache_file ) < cache_time \
+            and os.path.getsize(cache_file) != 0:
+                self.message('using top artists from cache ("%s")' % cache_file.encode("utf-8"))
+                cache = open(cache_file, 'r')
+                # we will get an exception if the cache file is broken
+                try:
+                    tree = etree.parse(cache)
+                except Exception, e:
+                    self.message('top artists cache file "%s" seems to be broken' % cache_file.encode("utf-8"))
+                    tree = None
+            
+            # download file if cache failed
+            if tree == None:
+                self.message('downloading top artists for ' + self.username)
+                cache = open(cache_file, 'w')
+                for st in urllib.urlopen(ART_URL % (self.username,self.period)):
+                    cache.write(st)
+                cache.close()
+                cache = open(cache_file, 'r')
                 tree = etree.parse(cache)
-            except Exception, e:
-                self.message('top artists cache file "%s" seems to be broken' % cache_file.encode("utf-8"))
-                tree = None
-        
-        # download file if cache failed
-        if tree == None:
-            self.message('downloading top artists for ' + self.username)
-            cache = open(cache_file,'w')
-            for st in urllib.urlopen(ART_URL % (self.username,self.period)):
-                cache.write(st)
-            cache.close()
-            cache = open(cache_file,'r')
-            tree = etree.parse(cache)
-            cache.close()
+                cache.close()
         
         artists = list()
         for element in tree.getiterator():
@@ -223,30 +229,34 @@ class scaicha:
         cache_file = ('%s%s.artist.cache' % (cache_dir, self.gen_valid_filename(artist)))
         tree = None
         
-        # try to use file from cache
-        if os.path.exists(cache_file) == True \
-        and time.time() - os.path.getmtime(cache_file) < cache_time \
-        and os.path.getsize(cache_file) != 0:
-            self.message('using tag data for %s from cache ("%s")' % (artist.encode("utf-8"), cache_file.encode("utf-8")))
-            cache = open(cache_file,'r')
-            # we will get an exception if the cache file is broken
-            try:
+        # lock the cache file to prevent conflicts with concurrent scaicha instances.
+        # locking needs to be done already when reading because another scaicha instance
+        # could still be writing into this file and we would read a broken file.
+        with FileLock(cache_file, timeout=10, delay=0.1) as lock:
+            # try to use file from cache
+            if os.path.exists(cache_file) == True \
+            and time.time() - os.path.getmtime(cache_file) < cache_time \
+            and os.path.getsize(cache_file) != 0:
+                self.message('using tag data for %s from cache ("%s")' % (artist.encode("utf-8"), cache_file.encode("utf-8")))
+                cache = open(cache_file, 'r')
+                # we will get an exception if the cache file is broken
+                try:
+                    tree = etree.parse(cache)
+                except Exception, e:
+                    self.message('tag data cache file "%s" seems to be broken' % cache_file.encode("utf-8"))
+                    tree = None
+                
+            # download file if cache failed
+            if tree == None:
+                self.message('downloading tag data for %s' % artist.encode("utf-8"))
+                cache = open(cache_file, 'w')
+                # get artist xml document
+                for st in urllib.urlopen((TAG_URL % artist).encode("utf-8")):
+                    cache.write(st)
+                cache.close()
+                cache = open(cache_file, 'r')
                 tree = etree.parse(cache)
-            except Exception, e:
-                self.message('tag data cache file "%s" seems to be broken' % cache_file.encode("utf-8"))
-                tree = None
-            
-        # download file if cache failed
-        if tree == None:
-            self.message('downloading tag data for %s' % artist.encode("utf-8"))
-            cache = open(cache_file,'w')
-            # get artist xml document
-            for st in urllib.urlopen((TAG_URL % artist).encode("utf-8")):
-                cache.write(st)
-            cache.close()
-            cache = open(cache_file,'r')
-            tree = etree.parse(cache)
-            cache.close()
+                cache.close()
         
         # as the tag numbers from last.fm are a rather stupid value (neither an absolute value nor a real ratio)
         # we need to sum up all tag values per artist first in order to calculate the tag percentage
@@ -501,16 +511,18 @@ class scaicha:
         
         filename = self.get_filename()
         
-        self.draw_pie_chart(tags)
-        # crop image border
-        os.popen('convert -trim -page +0+0 ./%s ./%s' % (filename, filename))
-        # draw username and date to image
-        os.popen('DATE=$(date "+%%F"); convert -pointsize 11 -rotate 90 -draw "gravity SouthWest text 0,0 \\"%s %s $DATE by scaicha\\"" -rotate -90 ./%s ./%s' % (self.username, self.period, filename, filename))
-        
-        if self.draw_score:
-            score = self.calculate_score(tags)
-            self.draw_score(score)
-            os.popen('montage -tile 1x -background none -geometry +0+0 ./%s ./%s ./%s' % (self.filename_score, filename, filename))
-        
-        if self.size > 0:
-            os.popen('convert -resize %s ./%s ./%s' %(self.size, filename, filename))
+        # lock the image file to prevent conflicts with concurrent scaicha instances.
+        with FileLock(filename, timeout=10, delay=0.1) as lock:
+            self.draw_pie_chart(tags)
+            # crop image border
+            os.popen('convert -trim -page +0+0 ./%s ./%s' % (filename, filename))
+            # draw username and date to image
+            os.popen('DATE=$(date "+%%F"); convert -pointsize 11 -rotate 90 -draw "gravity SouthWest text 0,0 \\"%s %s $DATE by scaicha\\"" -rotate -90 ./%s ./%s' % (self.username, self.period, filename, filename))
+            
+            if self.draw_score:
+                score = self.calculate_score(tags)
+                self.draw_score(score)
+                os.popen('montage -tile 1x -background none -geometry +0+0 ./%s ./%s ./%s' % (self.filename_score, filename, filename))
+            
+            if self.size > 0:
+                os.popen('convert -resize %s ./%s ./%s' %(self.size, filename, filename))
