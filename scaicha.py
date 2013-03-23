@@ -461,10 +461,14 @@ class scaicha:
         # reverse to dump most occuring tag first
         tagList.reverse()
         
-        with open(self.get_tags_filename(), "w") as file:
-            for tag, count in tagList:
-                file.write("%s\t%s\n" % (count, tag.encode("utf-8")))
-        self.message('tag statistic written to ' + self.get_tags_filename())
+        filename = self.get_tags_filename()
+        
+        # lock the image file to prevent conflicts with concurrent scaicha instances.
+        with FileLock(filename, timeout=10, delay=0.1) as lock:
+            with open(filename, "w") as file:
+                for tag, count in tagList:
+                    file.write("%s\t%s\n" % (count, tag.encode("utf-8")))
+            self.message('tag statistic written to ' + filename)
     
     def combine_tags(self, tags):
         for combination in self.combined_tags:
