@@ -36,6 +36,7 @@ import time
 import unicodedata
 import urllib
 import xml.etree.cElementTree as etree
+from collections import defaultdict
 from operator import itemgetter
 
 from fileLock import FileLock
@@ -432,7 +433,7 @@ class scaicha:
         
         # substitute tags
         tagDelList = []
-        tagAddDict = {}
+        tagAddDict = defaultdict(float)
         for tag in tags:
             if tag in substitutions:
                 mainTag = substitutions[tag]
@@ -441,9 +442,11 @@ class scaicha:
                 # main tag and deleting the substituted tag
                 subsScore = tags[tag]
                 if mainTag in tags:
+                    # add score now
                     tags[mainTag] += subsScore
                 else:
-                    tagAddDict[mainTag] = subsScore
+                    # schedule for later addition
+                    tagAddDict[mainTag] += subsScore
                 tagDelList.append(tag)
         
         # delete substituted tags
