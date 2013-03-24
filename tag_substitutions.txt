@@ -29,6 +29,7 @@ a cappella: a capella, acappella, acapella
 a cappella metal: a capella metal
 acid jazz: acidjazz
 acid techno: acidtechno
+acoustic: accoustic
 actors: actor
 african: africa
 afrobeat: afro beat, afro-beat
@@ -61,7 +62,7 @@ atmospheric: athmospheric
 aussie hip hop: aussie hiphop
 australian: australia
 austrian: austria
-avantgarde: avant garde, avangarde
+avantgarde: avant garde, avangarde, avantgard
 avantgarde metal: avant garde metal
 bagpipe: bagpipes
 balkan: balkans
@@ -73,6 +74,7 @@ belgian: belgium, belgisch
 blackened death metal: black death metal, black death metal, blackdeath metal, black deathmetal, blackdeathmetal
 blackened thrash metal: black thrash metal
 black metal: blackmetal
+black n roll: blacknroll
 blues rock: bluesrock
 bollywood soundtrack: bollywood soundtracks
 boyband: boybands, boy band, boy bands
@@ -91,6 +93,7 @@ californian: california
 canadian: canada, canadians
 catalan: catala, catalana, catalonia
 celtic punk: celt punk
+chanson francaise: chanson française
 chant: chants
 chillout: chill out, chilled out
 christian: christians, christian band, christian bands
@@ -120,6 +123,7 @@ dark ambient: darkambient
 dark cabaret: dark cabret
 dark electro: darkelectro
 dark folk: darkfolk
+dark jazz: darkjazz
 dark neoclassical: dark neoclassic
 dark pop: darkpop
 darkpsy: dark psy
@@ -169,6 +173,7 @@ electrohouse: electro house
 electroindustrial: electro industrial
 electrojazz: electro jazz
 electromedieval: electro medieval
+electronica: eletronica
 electronic: eletronic, electro, eletro
 electropop: electro pop
 electropunk: electro punk
@@ -182,10 +187,12 @@ emorap: emo rap
 ensemble: ensembles
 estonian: estonia
 ethereal: etheral
-euro dance: eurodance
-euro disco: eurodisco
+eurodance: euro dance
+eurodisco: euro disco
 european: europe
+europop: euro pop
 euro trance: eurotrance
+experimental: experimetal
 experimental hip hop: experimental hiphop
 favorite artists: favorite artist, favourite artist, favourite artists, favorite bands, favorite band, favourite bands, favourite band
 favorites: favourites, favorite, favourite
@@ -264,6 +271,7 @@ indie pop: indiepop
 indie rock: indierock
 indietronica: indie electronic, indielectronic, indietronics, indietronic
 indonesian: indonesia
+industrial hip hop: industrial hiphop
 industrial metal: industrialmetal
 instrumental hip hop: instrumental hiphop
 instrumental: instumentals
@@ -326,9 +334,11 @@ neofolk: neo folk
 neopop: neo pop
 neopsychedelia: neopsychedelic, neo psychedelic, 
 neosoul: neo soul
+nerdcore: nerd core
 netlabel: netlabels
 neue deutsche haerte: neue deutsche härte, neue deutsche harte, ndh
 new age: newage
+newschool hardcore: new school hardcore
 new wave: newwave
 new zealand: new zealander
 nigerian: nigeria
@@ -350,7 +360,7 @@ orchestra: orchestral
 pagan folk: paganfolk
 pirate: pirates
 polish: poland
-polit hip hop: polithip hop, polit hiphop
+polit hip hop: polithip hop, polit hiphop, political hiphop, political hip hop
 polit punk: politpunk
 polit rock: politrock
 pop metal: popmetal
@@ -386,6 +396,7 @@ psychpunk: psych punk
 psytrance: psy trance
 punk pop: punkpop
 punk rock: punkrock
+raggae: raggea
 ragga metal: raggametal
 ragga punk: raggapunk
 rap metal: rapmetal
@@ -414,6 +425,7 @@ shoegaze: shoegazer, shoegazing
 singer songwriter: singersongwriter, singer-songwriter, singer songwriters, singersongwriters, singer/songwriter, singersongwriterer
 ska jazz: skajazz
 ska punk: skapunk
+skinhead reggae: skinhead reggea
 skinhead: skinheads
 slam death metal: slammin death metal, slammin death metal
 slovenian: slovenia
@@ -429,14 +441,17 @@ soundsystem: sound system
 soundtrack: sound track, soundtracks
 soundwave: sound wave, sound waves, soundwaves
 south african: south africa
+southern hip hop: southern hiphop
 space age pop: spaceagepop
 space rock: spacerock
 spanish: spain
 speedfolk: speed folk
+standup: stand up
 steampunk: steam punk
 stoner doom metal: stonerdoom metal
 stoner doom: stoner/doom, stonerdoom
 stoner rock: stonerrock
+straight edge: straightedge
 street punk: streetpunk
 supergroup: supergroups
 surf rock: surfrock
