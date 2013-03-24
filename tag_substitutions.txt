@@ -52,7 +52,6 @@ antifascist: antifacist, anti fascist, antifaschistisch, antifascism, antifa
 anti folk: antifolk, anti-folk
 antiracist: antirasist
 arabian: arabic
-arbeiterlieder: arbeiterlied
 argentinian: argentina, argentin, argentino, argentinu
 armenian: armenia
 art rock: artrock
@@ -307,7 +306,7 @@ male vocalists: male vocalist, male vocal, male vocals, male singer, male singer
 mashup: mash up
 mathcore: math core
 math rock: mathrock
-medieval: medival, mediaeval, mittelalter folk, mittelalterfolk
+medieval: medival, mediaeval, mittelalter, mittelalter folk, mittelalterfolk
 medieval metal: medievalmetal, mittelalter metal, mittelaltermetal
 medieval rock: medievalrock, mittelalter rock, mittelalterrock
 melancholic: melancholy, melancholie, melencholic, melancholia, melancholisch
@@ -481,6 +480,6 @@ west coast hip hop: west coast hiphop, westcoast hiphop, westcoast hip hop
 west coast rap: westcoast rap
 west coast: westcoast
 wicca: wiccan
-workers songs: worker songs
+workers songs: worker songs, arbeiterlieder, arbeiterlied
 world music: worldmusic, world, worlds
 x factor: xfactor
