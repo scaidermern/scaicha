@@ -98,6 +98,7 @@ classical: classic
 classic hip hop: classic hiphop, clssic hip hop
 classic metal: classical metal
 coldwave: cold wave
+communist: kommunisten mucke
 composers: composer
 contemporary rnb: contemporary r&b
 corsican: corsica
@@ -480,6 +481,6 @@ west coast hip hop: west coast hiphop, westcoast hiphop, westcoast hip hop
 west coast rap: westcoast rap
 west coast: westcoast
 wicca: wiccan
-workers songs: worker songs, arbeiterlieder, arbeiterlied
+worker songs: workers songs, arbeiterlieder, arbeiterlied
 world music: worldmusic, world, worlds
 x factor: xfactor
