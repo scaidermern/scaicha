@@ -72,7 +72,7 @@ class scaicha:
         self.color_lighten_fac = 0.0
         self.ignored_tags  = []
         self.combined_tags = []
-        self.draw_score = False
+        self.do_draw_score = False
         self.do_substitute_tags = True
         self.do_dump_tags = False
         self.filename = ''
@@ -138,7 +138,7 @@ class scaicha:
         self.size = size
         
     def set_score(self):
-        self.draw_score = True
+        self.do_draw_score = True
     
     def set_dump_tags(self):
         self.do_dump_tags = True
@@ -526,7 +526,7 @@ class scaicha:
             # draw username and date to image
             os.popen('DATE=$(date "+%%F"); convert -pointsize 11 -rotate 90 -draw "gravity SouthWest text 0,0 \\"%s %s $DATE by scaicha\\"" -rotate -90 ./%s ./%s' % (self.username, self.period, filename, filename))
             
-            if self.draw_score:
+            if self.do_draw_score:
                 score = self.calculate_score(tags)
                 self.draw_score(score)
                 os.popen('montage -tile 1x -background none -geometry +0+0 ./%s ./%s ./%s' % (self.filename_score, filename, filename))
