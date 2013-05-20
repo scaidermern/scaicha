@@ -39,7 +39,7 @@ def usage(name):
     print '  -p <arg>, --period <arg>      period of top artists (3, 6, 12; default: overall)'
     print '  -i <arg>, --ignore <arg>      comma separated list of tags to ignore, e.g. "hip hop,rap"'
     print '  -j <arg>, --join <arg>        combines a list of tag groups. groups are separated by commas, tags by colon'
-    print '  -m <arg>, --minTagPerc <arg>  minimum tag percentage (default: 1.0), less occuring tags will be merged into other tags'
+    print '  -m <arg>, --minTagPerc <arg>  minimum tag percentage (default: 1.0), less occuring tags will be merged into "other tags"'
     print '  -c <arg>, --colorScheme <arg> color scheme to use (rainbow (default) or gradient)'
     print '  -b <arg>, --baseColor <arg>   base color to use (hex string or a HTML 4.0 color name)'
     print '  -l <arg>, --lighten <arg>     lighten base color by given factor (between 0.0 and 1.0)'

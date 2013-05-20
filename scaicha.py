@@ -233,7 +233,14 @@ class scaicha:
         # lock the cache file to prevent conflicts with concurrent scaicha instances.
         # locking needs to be done already when reading because another scaicha instance
         # could still be writing into this file and we would read a broken file.
-        with FileLock(cache_file, timeout=10, delay=0.1) as lock:
+        lock_timeout=10 # seconds
+        cache_file_lock = cache_file + '.lock'
+        if os.path.exists(cache_file_lock) == True \
+           and os.path.getmtime(cache_file_lock) > lock_timeout + 1:
+            # remove stale lock, possibly from an aborted instance
+            print 'deleting stale lock "%s"' % cache_file_lock
+            os.remove(cache_file_lock)
+        with FileLock(cache_file, timeout=lock_timeout, delay=0.1) as lock:
             # try to use file from cache
             if os.path.exists(cache_file) == True \
             and time.time() - os.path.getmtime(cache_file) < cache_time \
