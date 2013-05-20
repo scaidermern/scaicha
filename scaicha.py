@@ -236,7 +236,7 @@ class scaicha:
         lock_timeout=10 # seconds
         cache_file_lock = cache_file + '.lock'
         if os.path.exists(cache_file_lock) == True \
-           and os.path.getmtime(cache_file_lock) > lock_timeout + 1:
+           and time.time() - os.path.getmtime(cache_file_lock) > lock_timeout + 1:
             # remove stale lock, possibly from an aborted instance
             print 'deleting stale lock "%s"' % cache_file_lock
             os.remove(cache_file_lock)
