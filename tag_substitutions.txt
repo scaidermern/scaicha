@@ -92,7 +92,7 @@ bulgarian: bulgaria
 californian: california
 canadian: canada, canadians
 catalan: catala, catalana, catalonia
-celtic punk: celt punk
+celtic punk: celt punk, celticpunk
 chanson francaise: chanson française
 chant: chants
 chillout: chill out, chilled out
@@ -257,6 +257,7 @@ heavy metal: heavymetal
 heavy power metal: power heavy metal, heavypower metal
 hip hop: hiphop
 hip hop rap: hip hoprap, hiphop rap, hiphoprap
+horror pop: horrorpop
 horror punk: horrorpunk
 humour: humor
 hungarian: hungary
@@ -277,7 +278,9 @@ instrumental hip hop: instrumental hiphop
 instrumental: instumentals
 instrumental post-rock: instrumental post rock, instrumental postrock
 irish: ireland
+irish folk: irisch folk
 irish punk: irishpunk
+irish rock: irishrock
 irish speedfolk: irish speed folk
 israeli: israel
 italian: italy, italia, italiano
@@ -316,6 +319,7 @@ mashup: mash up
 mathcore: math core
 math rock: mathrock
 medieval: medival, mediaeval, mittelalter, mittelalter folk, mittelalterfolk
+medieval folk: medievalfolk, medievally folk
 medieval metal: medievalmetal, mittelalter metal, mittelaltermetal
 medieval rock: medievalrock, mittelalter rock, mittelalterrock
 melancholic: melancholy, melancholie, melencholic, melancholia, melancholisch
