@@ -271,23 +271,25 @@ class scaicha:
         iter = tree.getiterator()
         total_tag_values = 0
         for element in iter:
-            if ((element.tag == 'count') and (element.text != '0')):
+            if element.tag == 'count' and element.text != '0':
                 total_tag_values += int(element.text)
         
         # now calculate the tag percentage and generate the tag list
         tag_name = None
+        tag_value = None
         for element in iter:
-            if (element.tag == 'name'):
+            if element.tag == 'name':
                 tag_name = element.text.lower()
                 for bad_char in "-/": # remove some bad chars, reduces number of differently spelled tags with same meaning
                     tag_name = tag_name.replace(bad_char, "")#
                 while "  " in tag_name: # replace duplicated whitespaces
                     tag_name = tag_name.replace("  ", " ")
-            if ((element.tag == 'count') and (element.text != '0')):
+            if element.tag == 'count' and element.text != '0':
                 art_tag_perc  = int(element.text) / float(total_tag_values) * 100.0
                 art_play_perc = (playcount / float(self.total_play_count)) * 100.0
                 tag_value = art_tag_perc * float(art_play_perc) / 100.0
-                
+
+            if tag_name != None and tag_value != None:
                 self.tags_lock.acquire()
                 if tag_name in self.tags:
                     self.tags[tag_name] += tag_value
@@ -298,6 +300,7 @@ class scaicha:
                 self.tags_lock.release()
                 
                 tag_name = None
+                tag_value = None
 
     def draw_pie_chart(self, tags):
         self.message('drawing chart')
